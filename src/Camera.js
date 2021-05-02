@@ -6,52 +6,41 @@ class Camera extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: logo,
-            show: false
-
+            image: logo
         };
-        //console.log(this.state);
-        // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
-        this.startScan = this.startScan.bind(this);
+        this.startStream = this.startStream.bind(this);
         this.stopVideo = this.stopVideo.bind(this);
         this.startVideo = this.startVideo.bind(this);
     }
 
     startVideo() {
-        this.setState({
-            show: true
-        });
-        this.interval = setInterval(() => this.handleClick(), 30);
+        this.show = true
     }
-    startScan(){
-        console.log("click start scan")
-        fetch("http://localhost:5000/scan").then((response) =>
-            {
-                console.log(response)
-                if (response['start'] === true) {
-                    console.log("start scanning")
-                }
-            }
-        )
+
+    componentWillUnmount() {
+        this.show = false;
+        console.log("finished")
     }
-    handleClick() {
-        console.log(this.state.show)
-        if (this.state.show === false) {
+
+    componentDidMount() {
+       // this.interval = setInterval(() => this.startStream(), 30);
+    }
+
+    startStream() {
+        if (this.show === false) {
             return
         }
         fetch("http://localhost:5000/scan/get_camera_stream")
             .then((response) => response.json())
             .then((jsonData) => {
                 // jsonData is parsed json object received from url
-                if (this.state.show === false) {
+                if (this.show === false) {
+                    console.log("fetch although false!!!")
                     return
                 }
                 this.setState({
-                    image: `data:image/png;base64,` + jsonData["image"].slice(2, jsonData["image"].length - 1),
-                    show: true,
+                    image: `data:image/png;base64,` + jsonData["image"].slice(2, jsonData["image"].length - 1)
                 });
-                //console.log(this.state);
             })
             .catch((error) => {
                 // handle your errors here
@@ -60,24 +49,20 @@ class Camera extends Component {
     }
 
     stopVideo = () => {
-        //console.log("stop");
+        console.log("stop")
         if (this.interval !== undefined) {
             clearInterval(this.interval);
             this.interval = undefined;
         }
         this.setState({
-            image: logo,
-            show: false
+            image: logo
         })
-
+        this.show = false;
     };
 
     render() {
         return (
             <div>
-                <Button type="button" variant="contained" color="secondary" onClick={this.startScan}>
-                    Start Scan
-                </Button>
                 <Button type="button" variant="contained" color="primary" onClick={this.startVideo}>
                     Open Video
                 </Button>
@@ -85,7 +70,7 @@ class Camera extends Component {
                 <Button type="button" variant="contained" color="secondary" onClick={this.stopVideo}>
                     Stop Video
                 </Button>
-                <img src={this.state.image}  alt={"Me"}/>
+                <img src={this.state.image} alt={"Me"}/>
             </div>
         );
     }

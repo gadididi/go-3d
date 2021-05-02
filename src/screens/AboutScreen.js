@@ -6,7 +6,9 @@ class AboutScreen extends Component{
     }
     render() {
         return(
-            0
+            <div>
+                about
+            </div>
         )
     }
 }

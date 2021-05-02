@@ -1,12 +1,10 @@
-import './App.css';
-import MainContainer from "./mainContainer";
+import './styles/App.css';
 import Dash from "./Dashboard";
 
 
 function App() {
   return (
     <div className="App">
-        {/*<MainContainer/>*/}
         <Dash/>
     </div>
   );

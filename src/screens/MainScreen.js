@@ -7,6 +7,7 @@ class MainScreen extends Component{
     render() {
         return(
             <div>
+                hello home
             </div>
 
         )

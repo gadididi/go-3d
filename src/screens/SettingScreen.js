@@ -6,7 +6,9 @@ class SettingScreen extends Component{
     }
     render() {
         return(
-            0
+            <div>
+                setting
+            </div>
         )
     }
 }
