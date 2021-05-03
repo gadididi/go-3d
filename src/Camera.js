@@ -8,6 +8,8 @@ class Camera extends Component {
         };
         this.interval = null;
         this.stream = false;
+        this.counter = 0;
+
     }
 
 
@@ -24,12 +26,13 @@ class Camera extends Component {
     }
 
     startStream() {
-        if (this.stream === true){
+        if (this.stream === true && this.counter < 20){
+            this.counter+=1;
             fetch("http://localhost:5000/scan/get_camera_stream")
                 .then((response) => response.json())
                 .then((jsonData) => {
                     // jsonData is parsed json object received from url
-
+                    this.counter-=1;
                     this.setState({
                         image: `data:image/png;base64,` + jsonData["image"].slice(2, jsonData["image"].length - 1)
                     });
@@ -46,7 +49,7 @@ class Camera extends Component {
         return (
             <div>
                 <br/>
-                <img src={this.state.image} width="640" height="480" alt={"Me"}/>
+                <img src={this.state.image} width="640" height="480" style={{border: "2px solid gray"}} alt={"Me"}/>
             </div>
         );
     }

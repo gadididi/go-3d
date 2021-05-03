@@ -44,7 +44,6 @@ class Dash extends Component {
     }
 
     render() {
-        let color;
         return (
             <>
                 <Navbar bg="dark" variant="dark" expand={'sm'}>
