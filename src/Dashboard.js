@@ -1,13 +1,15 @@
 import React, {Component} from "react";
-import {Container, Row, Col, Card, Form, Button, Nav} from "react-bootstrap";
+import {Container, Row, Col, Card, Form, Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
 //import {withRouter} from "react-router";
-//import Sidebar from "./sidebar.js";
+//import logo from "./sidebar.js";
+import logo from './man.png';
 import './styles/Dashboard.css'
 import Side from "./sidebar";
 import MainScreen from "./screens/MainScreen";
 import ScanScreen from "./screens/ScanScreen";
 import SettingScreen from "./screens/SettingScreen";
 import AboutScreen from "./screens/AboutScreen";
+import Footer from "./Footer"
 
 
 class Dash extends Component {
@@ -42,8 +44,21 @@ class Dash extends Component {
     }
 
     render() {
+        let color;
         return (
             <>
+                <Navbar bg="dark" variant="dark" expand={'sm'}>
+                    <Navbar.Brand href="#home">
+                        <img
+                            alt=""
+                            src={logo}
+                            width="50"
+                            height="50"
+                            className="d-inline-block align-middle"
+                        />
+                    </Navbar.Brand>
+                    <h3 style={{color : "white"}}>GO 3D</h3>
+                </Navbar>
                 <Container fluid>
                     <Row>
                         <Col xs={2} id="sidebar-wrapper">
@@ -53,9 +68,10 @@ class Dash extends Component {
                         <Col xs={10} id="page-content-wrapper">
                             {this.renderPage()}
                         </Col>
-                    </Row>
 
+                    </Row>
                 </Container>
+                <Footer/>
             </>
         );
     }
@@ -63,3 +79,5 @@ class Dash extends Component {
 
 // const Dashboard = withRouter(Dash);
 export default Dash
+
+
