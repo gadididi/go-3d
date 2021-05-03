@@ -1,4 +1,7 @@
 import React, {Component} from "react";
+import bad_example from '../images/Example_bad.png';
+import good_example from '../images/Example_good.png';
+import {Col, Container, Row} from "react-bootstrap";
 
 class AboutScreen extends Component{
     constructor(props) {
@@ -24,9 +27,38 @@ class AboutScreen extends Component{
                     <h6 align={'left'}>Question: How to turn the camera on?</h6>
                     <h6 align={'left'}>Answer: There's no need to turn the camera on as long as it is properly connected.
                     The program will turn the camera on when you start a scan and will turn it off when you're finished.</h6>
-
                 </div>
-
+                <br/>
+                <div style={{backgroundColor : 'lightgray', padding:'5px', border:'2px solid gray'}}>
+                    <h6 align={'left'}>Question: Can I scan female subjects?</h6>
+                    <h6 align={'left'}>Answer: The product is currently supporting only male subjects, but in most cases it will also work for female subjects, so you can try.</h6>
+                </div>
+                <br/>
+                <Container fluid style={{backgroundColor : 'lightgray', padding:'5px', border:'2px solid gray'}}>
+                    <Row className='row'>
+                        <Col className='col' xs={12}>
+                            <h6 align={'left'}>Question: What counts as a good picture?</h6>
+                            <h6 align={'left'}>Answer: The subject should fit entirely in the screen, the Red dot should be pointing at the subject, and you should see the subject in the same color (blue).
+                                If there's some islands of red or pink color inside the subject's outlines, try to tell the subject to take a step forward.</h6>
+                            <h6 align={'left'}>Example for a bad picture: </h6>
+                            <br/>
+                            <img align={'left'} src={bad_example} height='350' width='500' alt='' style={{border: "5px solid black"}}/>
+                            <br/>
+                        </Col>
+                        <Col className='col' xs={12}>
+                            <br/>
+                            <h6 align={'left'}>Example for a good picture:</h6>
+                            <img align={'left'} src={good_example} height='350' width='500' alt='' style={{border: "5px solid black"}}/>
+                        </Col>
+                    </Row>
+                </Container>
+                <br/>
+                <div style={{backgroundColor : 'lightgray', padding:'5px', border:'2px solid gray'}}>
+                    <h6 align={'left'}>Question: How can I improve the picture's quality?</h6>
+                    <h6 align={'left'}>Answer: In the settings section, you can choose the rendering distance, increasing it will prevent
+                        pink island inside the subject's outline, but increasing too much will cause the outline to be inaccurate.</h6>
+                </div>
+                <br/>
             </div>
         )
     }
