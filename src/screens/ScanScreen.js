@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import Camera from "../Camera";
-import {Container, Row, Col, Card, Form, Button, Nav} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import logo from '../images/camera_off.png';
+import SimplePopover from "../components/SimplePopover";
 
 class ScanScreen extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class ScanScreen extends Component {
         this.state = {
             openCamera: false,
             tookPic: false,
-            picThatTook: null
+            picThatTook: null,
+            weightTook: false
         }
         this.openOrCloseCamera = this.openOrCloseCamera.bind(this);
         this.takePic = this.takePic.bind(this);
@@ -92,7 +94,21 @@ class ScanScreen extends Component {
 
     renderOpenCloseButton() {
         if (this.state.tookPic) {
-            return <></>
+            return <>
+                <div>
+                    <button type="button"
+                            className={"btn btn-success"}
+                            onClick={this.ShowResClick}>
+                        <h1> Show Results!</h1>
+                    </button>
+                    <button type="button"
+                            className={"btn btn-danger"}
+                            onClick={this.tryAgainClick}>
+                        <h1> Try Again</h1>
+                    </button>
+                    <SimplePopover/>
+                </div>
+            </>
         }
         if (this.state.openCamera === false) {
             return <button type="button"
@@ -121,10 +137,16 @@ class ScanScreen extends Component {
         return (
             <Container fluid>
                 <Row>
-                    {this.state.tookPic === true ? this.showPicTaken() : this.cameraIsOpen()}
+                    <Col xs={12}>
+                        {this.state.tookPic === true ? this.showPicTaken() : this.cameraIsOpen()}
+                    </Col>
+
                 </Row>
                 <Row xs={2}>
-                    {this.renderOpenCloseButton()}
+                    <Col xs={12}>
+                        {this.renderOpenCloseButton()}
+                    </Col>
+
                 </Row>
 
             </Container>
@@ -132,29 +154,36 @@ class ScanScreen extends Component {
     }
 
     async ShowResClick() {
-        let time = Date().toLocaleString().replace(/\s+/g, '').replace(":",'');
-        let time_str = time
+        if(this.state.weightTook === false){
+            alert("You have to write subject's weight in the TextBox before you click 'Show Results'...")
+            return;
+        }
+        let time_str = Date().toLocaleString().replace(/\s+/g, '').replace(":", '')
         console.log(time_str)
         const requestOptionsSave = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         };
         console.log(time_str)
-        const response = await fetch("http://localhost:5000/scan/save_scan/"+time_str, requestOptionsSave);
-        const json = response.json();
-
-        console.log("the response save_scan:", json)
-        if (json['save_scan'] === false) {
-            throw new Error('Failed to save_scan');
-        } else {
-            console.log("save_scan done!");
-        }
+        const response = await fetch("http://localhost:5000/scan/save_scan/" + time_str, requestOptionsSave);
+        response.json().then(function(value) {
+            console.log("the response save_scan:", value)
+            if (value['save_scan'] === false) {
+                throw new Error('Failed to save_scan');
+            } else {
+                console.log("save_scan done!");
+            }
+        }).catch((error) => {
+            console.log(error);
+            alert("fail to save the image");
+            return "not good";
+        });
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         };
-        fetch("http://localhost:5000/scan/process_frame/" + time_str + "/70", requestOptions).then(async (response2) =>{
-            const json2 = await  response2.json();
+        fetch("http://localhost:5000/scan/process_frame/" + time_str + "/70", requestOptions).then(async (response2) => {
+            const json2 = await response2.json();
             console.log("the response process_frame:", json2)
             if (json2['process_frame'] === false) {
                 throw new Error('Failed to process the frame');
@@ -206,16 +235,6 @@ class ScanScreen extends Component {
             <div>
                 <h1> The Pic is: </h1>
                 <img src={this.state.picThatTook} alt={"Me"}/>
-                <button type="button"
-                        className={"btn btn-success"}
-                        onClick={this.ShowResClick}>
-                    <h1> Show Results!</h1>
-                </button>
-                <button type="button"
-                        className={"btn btn-danger"}
-                        onClick={this.tryAgainClick}>
-                    <h1> Try Again</h1>
-                </button>
             </div>
         </>);
     }
