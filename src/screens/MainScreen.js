@@ -49,7 +49,7 @@ class MyCarousel extends React.Component {
                     slides={[
                         (<div>
                             <br/>
-                            <img src={human} height='300' width='300' style={{border: "2px solid gray"}}/>
+                            <img src={human} height='300' width='300' style={{border: "2px solid gray"}} alt={"Me"}/>
                             <br/>
                             <h3>Measure your body parts</h3>
                             <div>From shoulders to tights, GO-3D will measure the subject's body parts in order to
@@ -59,7 +59,7 @@ class MyCarousel extends React.Component {
                         </div>),
                         (<div>
                             <br/>
-                            <img src={l515} height='300' width='300' style={{border: "2px solid gray"}}/>
+                            <img src={l515} height='300' width='300' style={{border: "2px solid gray"}} alt={"Me"}/>
                             <br/>
                             <h3>RealSense L515 camera</h3>
                             <div>In order to get the perfect measurements, The scan will be done by a L515 Lidar camera.</div>
@@ -69,7 +69,7 @@ class MyCarousel extends React.Component {
                         </div>),
                         (<div>
                             <br/>
-                            <img src={bmi} height='300' width='300' style={{border: "2px solid gray"}}/>
+                            <img src={bmi} height='300' width='300' style={{border: "2px solid gray"}} alt={"Me"}/>
                             <br/>
                             <h3>Measure your BMI score</h3>
                             <div>Body mass index (BMI) is a value derived from the mass (weight) and height of a person.

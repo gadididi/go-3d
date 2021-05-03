@@ -45,6 +45,7 @@ class Camera extends Component {
     render() {
         return (
             <div>
+                <br/>
                 <img src={this.state.image} width="640" height="480" alt={"Me"}/>
             </div>
         );
