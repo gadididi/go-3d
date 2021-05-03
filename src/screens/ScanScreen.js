@@ -11,7 +11,8 @@ class ScanScreen extends Component {
             openCamera: false,
             tookPic: false,
             picThatTook: null,
-            weightTook: false
+            weightTook: false,
+            weight : null
         }
         this.openOrCloseCamera = this.openOrCloseCamera.bind(this);
         this.takePic = this.takePic.bind(this);
@@ -82,7 +83,8 @@ class ScanScreen extends Component {
                         this.setState({
                             openCamera: false,
                             tookPic: true,
-                            picThatTook: img
+                            picThatTook: img,
+                            weight : null
 
                         })
                     }
@@ -99,14 +101,14 @@ class ScanScreen extends Component {
                     <button type="button"
                             className={"btn btn-success"}
                             onClick={this.ShowResClick}>
-                        <h1> Show Results!</h1>
+                        <h2> Show Results!</h2>
                     </button>
                     <button type="button"
                             className={"btn btn-danger"}
                             onClick={this.tryAgainClick}>
-                        <h1> Try Again</h1>
+                        <h2> Try Again</h2>
                     </button>
-                    <SimplePopover/>
+                    <SimplePopover weight_={this.state.weight}/>
                 </div>
             </>
         }
@@ -114,7 +116,7 @@ class ScanScreen extends Component {
             return <button type="button"
                            className={"btn btn-success"}
                            onClick={this.openOrCloseCamera}>
-                <h1> Open Video</h1>
+                <h2> Open Video</h2>
             </button>
         } else {
             return (
@@ -218,7 +220,8 @@ class ScanScreen extends Component {
                         this.setState({
                             openCamera: true,
                             tookPic: false,
-                            picThatTook: null
+                            picThatTook: null,
+                            weight : null
                         })
                     }
                 }
@@ -233,8 +236,7 @@ class ScanScreen extends Component {
         }
         return (<>
             <div>
-                <h1> The Pic is: </h1>
-                <img src={this.state.picThatTook} alt={"Me"}/>
+                <img src={this.state.picThatTook} style={{border: "5px solid gray"}} alt={"Me"}/>
             </div>
         </>);
     }
