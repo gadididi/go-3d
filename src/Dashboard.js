@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import {Container, Row, Col, Card, Form, Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
 //import {withRouter} from "react-router";
 //import logo from "./sidebar.js";
-import logo from './man.png';
+import logo from './images/man.png';
 import './styles/Dashboard.css'
 import Side from "./sidebar";
 import MainScreen from "./screens/MainScreen";
 import ScanScreen from "./screens/ScanScreen";
 import SettingScreen from "./screens/SettingScreen";
 import AboutScreen from "./screens/AboutScreen";
-import Footer from "./Footer"
+import Footer from "./components/Footer"
 
 
 class Dash extends Component {

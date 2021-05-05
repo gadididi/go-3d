@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import RenderDistanceSlider from "../RenderDistanceSlider";
+import RenderDistanceSlider from "../components/RenderDistanceSlider";
 
 class SettingScreen extends Component{
     constructor(props) {

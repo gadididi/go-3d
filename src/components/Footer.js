@@ -1,11 +1,14 @@
-import React from "react"
+import React from "react";
 
 function Footer() {
     return (
-        <footer className="page-footer font-small blue footer">
+        <footer class="page-footer font-small gray footer">
 
-            <div className="footer-copyright text-center p-3 grey lighten-1 text-black-50">Made by
-        <a href="https://github.com/gadididi" target="_blank" rel="noopener noreferrer" className="author"> Gadi and Ori</a>
+            <div class="footer-copyright text-center py-3" style={{backgroundColor: 'lightgray', borderTop: '1px solid'}}>All right reserved to Ori Levy and Gadi Didi, for contact please use linkedin
+                <text>, </text>
+                <a href="https://www.linkedin.com/in/ori-levy/" target="_blank" rel="noopener noreferrer" className="author">Ori Levy</a>
+                <text>, </text>
+                <a href="https://www.linkedin.com/in/gadi-didi-216537188/" target="_blank" rel="noopener noreferrer" className="author">Gadi Didi</a>
             </div>
 
         </footer>
@@ -13,11 +16,3 @@ function Footer() {
 }
 
 export default Footer;
-
-
-// <div className="footer-copyright text-center p-3 grey lighten-1 text-black-50">
-//     © 2021 Copyright:
-//     <a className="black-text" href="https://mdbootstrap.com/">
-//         MDBootstrap.com
-//     </a>
-// </div>

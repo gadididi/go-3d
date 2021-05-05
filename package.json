@@ -20,6 +20,7 @@
     "react-scripts": "4.0.3",
     "react-three": "^0.9.7",
     "react-three-fiber": "^6.0.13",
+    "rsuite": "^4.9.4",
     "three": "^0.128.0",
     "three-orbitcontrols": "^2.110.3",
     "web-vitals": "^1.1.0"

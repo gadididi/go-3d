@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import Camera from "../Camera";
+import Camera from "../components/Camera";
 import {Col, Container, Row} from "react-bootstrap";
 import logo from '../images/camera_off.png';
 import SimplePopover from "../components/SimplePopover";
+import WeightModal from "../components/WeightModal";
+
 
 class ScanScreen extends Component {
     constructor(props) {
@@ -108,11 +110,11 @@ class ScanScreen extends Component {
                             onClick={this.tryAgainClick}>
                         <h2> Try Again</h2>
                     </button>
-                    <SimplePopover weight_={this.state.weight}/>
+                    <WeightModal/>
                 </div>
             </>
         }
-        if (this.state.openCamera === false) {
+        else if (this.state.openCamera === false) {
             return <button type="button"
                            className={"btn btn-success"}
                            onClick={this.openOrCloseCamera}>

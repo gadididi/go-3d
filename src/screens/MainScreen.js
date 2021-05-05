@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import l515 from '../lidar515L.jfif';
-import bmi from '../bmi.jpg';
-import human from '../human.jpg';
+import l515 from '../images/lidar515L.jfif';
+import bmi from '../images/bmi.jpg';
+import human from '../images/human.jpg';
 
 class MainScreen extends Component {
     constructor(props) {

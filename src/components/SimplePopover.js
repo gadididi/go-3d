@@ -12,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimplePopover(props) {
-    const weight = props.weight_;
+    // const weight = props.weight_;
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
+        console.log("mniak")
         setAnchorEl(event.currentTarget);
     };
 
@@ -50,9 +51,9 @@ export default function SimplePopover(props) {
                 }}
             >
                 <Typography className={classes.typography}>
-                    <form className={classes.root} noValidate autoComplete="off">
+                    <form noValidate autoComplete="off">
                         <TextField id="outlined-basic" label="Weight" variant="outlined" />
-                        <button className="btn-primary btn-sm" onChange={this._handleTextFieldChange}>
+                        <button className="btn-primary btn-sm">
                             submit
                         </button>
                     </form>
