@@ -4,7 +4,8 @@ import {Col, Container, Row} from "react-bootstrap";
 import logo from '../images/camera_off.png';
 import WeightModal from "../components/WeightModal";
 import ResultModal from "../components/ResultModal";
-
+import CircularStatic from "../components/Loader";
+import FailedProcessModal from "../components/FailedprocessPic";
 
 class ScanScreen extends Component {
     constructor(props) {
@@ -14,7 +15,9 @@ class ScanScreen extends Component {
             tookPic: false,
             picThatTook: null,
             weightTook: false,
-            weight: null
+            weight: null,
+            load : false,
+            failed : false
         }
         this.openOrCloseCamera = this.openOrCloseCamera.bind(this);
         this.takePic = this.takePic.bind(this);
@@ -25,22 +28,28 @@ class ScanScreen extends Component {
 
     handleWeight(weight) {
         console.log(weight)
-        // this.setState({
-        //     weight: weight,
-        //     tookPic: true,
-        //     openCamera: false,
-        //     picThatTook: img
-        // })
         this.ShowResClick(weight).then(r => {
             console.log("good")
         });
     }
 
-    openOrCloseCamera() {
-        let prev = this.state.openCamera;
+    setOpenCamera(prev){
+        //let prev = this.state.openCamera;
         this.setState({
-            openCamera: !prev
+            openCamera: !prev,
+            load: false
         })
+    }
+    openOrCloseCamera() {
+        const loading = this.state.openCamera === false;
+        this.setState({
+            load: loading
+        })
+        if (this.state.openCamera === false){
+            setTimeout(()=>{this.setOpenCamera(this.state.openCamera)}, 3000);
+        }else {
+            this.setOpenCamera(this.state.openCamera)
+        }
     }
 
     componentDidMount() {
@@ -79,6 +88,7 @@ class ScanScreen extends Component {
     }
 
     cameraIsOpen() {
+        console.log("cameraIsOpen?????")
         if (this.state.openCamera) {
             return <Camera/>
         }
@@ -111,17 +121,12 @@ class ScanScreen extends Component {
     }
 
     renderOpenCloseButton() {
-        if(this.state.weight != null){
+        if(this.state.weight != null || this.state.load === true){
             return <></>;
         }
         if (this.state.tookPic) {
             return <>
                 <div>
-                    {/*<button type="button"*/}
-                    {/*        className={"btn btn-success"}*/}
-                    {/*        onClick={this.ShowResClick}>*/}
-                    {/*    <h2> Show Results!</h2>*/}
-                    {/*</button>*/}
                     <button type="button"
                             className={"btn btn-danger"}
                             onClick={this.tryAgainClick}>
@@ -131,11 +136,18 @@ class ScanScreen extends Component {
                 </div>
             </>
         } else if (this.state.openCamera === false) {
-            return <button type="button"
-                           className={"btn btn-success"}
-                           onClick={this.openOrCloseCamera}>
-                <h2> Open Video</h2>
-            </button>
+            return(
+                <>
+                <div>
+                    <button type="button"
+                            className={"btn btn-success"}
+                            onClick={this.openOrCloseCamera}>
+                        <h2> Open Video</h2>
+                    </button>
+                    {this.showFailedPicModal()}
+                </div>
+            </>
+            )
         } else {
             return (
                 <>
@@ -152,12 +164,21 @@ class ScanScreen extends Component {
 
         }
     }
+    showFailedPicModal(){
+        if (this.state.failed === true){
+            return <FailedProcessModal/>
+        }
+        return <></>
 
+    }
     showResults() {
         return <ResultModal weight={this.state.weight} info={this.state.info}/>
     }
     renderScreenScan(){
-        if(this.state.tookPic===false){
+        if (this.state.load === true){
+            return <CircularStatic/>
+        }
+        else if(this.state.tookPic===false){
              return this.cameraIsOpen();
         } else if (this.state.weight === null){
             return this.showPicTaken();
@@ -273,12 +294,24 @@ class ScanScreen extends Component {
                     openCamera: false,
                     tookPic: true,
                     weight: w,
-                    info : json2["results"]
+                    info : json2["results"],
+                    failed: false
                 })
                 console.log(this.state)
             }
         }).catch((error) => {
             console.log(error);
+            this.setState({
+                openCamera: false,
+                tookPic: false,
+                weight: null,
+                info : null,
+                img: null,
+                load: false,
+                picThatTook: null,
+                failed: true
+            })
+            console.log(this.state)
         });
     }
 
