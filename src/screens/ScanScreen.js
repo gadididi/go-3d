@@ -3,6 +3,7 @@ import Camera from "../components/Camera";
 import {Col, Container, Row} from "react-bootstrap";
 import logo from '../images/camera_off.png';
 import WeightModal from "../components/WeightModal";
+import ResultModal from "../components/ResultModal";
 
 
 class ScanScreen extends Component {
@@ -23,14 +24,16 @@ class ScanScreen extends Component {
     }
 
     handleWeight(weight) {
-        let img = this.state.picThatTook;
         console.log(weight)
-        this.setState({
-            weight: weight,
-            tookPic: true,
-            openCamera: false,
-            picThatTook: img
-        })
+        // this.setState({
+        //     weight: weight,
+        //     tookPic: true,
+        //     openCamera: false,
+        //     picThatTook: img
+        // })
+        this.ShowResClick(weight).then(r => {
+            console.log("good")
+        });
     }
 
     openOrCloseCamera() {
@@ -108,14 +111,17 @@ class ScanScreen extends Component {
     }
 
     renderOpenCloseButton() {
+        if(this.state.weight != null){
+            return <></>;
+        }
         if (this.state.tookPic) {
             return <>
                 <div>
-                    <button type="button"
-                            className={"btn btn-success"}
-                            onClick={this.ShowResClick}>
-                        <h2> Show Results!</h2>
-                    </button>
+                    {/*<button type="button"*/}
+                    {/*        className={"btn btn-success"}*/}
+                    {/*        onClick={this.ShowResClick}>*/}
+                    {/*    <h2> Show Results!</h2>*/}
+                    {/*</button>*/}
                     <button type="button"
                             className={"btn btn-danger"}
                             onClick={this.tryAgainClick}>
@@ -147,12 +153,24 @@ class ScanScreen extends Component {
         }
     }
 
+    showResults() {
+        return <ResultModal weight={this.state.weight} info={this.state.info}/>
+    }
+    renderScreenScan(){
+        if(this.state.tookPic===false){
+             return this.cameraIsOpen();
+        } else if (this.state.weight === null){
+            return this.showPicTaken();
+        } else {
+            return this.showResults();
+        }
+    }
     render() {
         return (
             <Container fluid>
                 <Row>
                     <Col xs={12}>
-                        {this.state.tookPic === true ? this.showPicTaken() : this.cameraIsOpen()}
+                        {this.renderScreenScan()}
                     </Col>
 
                 </Row>
@@ -218,12 +236,7 @@ class ScanScreen extends Component {
     // }
 
 
-    async ShowResClick() {
-        if (this.state.weight === null) {
-            alert("You have to write subject's weight in the TextBox before you click 'Show Results'...")
-            return;
-        }
-        let w = this.state.weight.toString();
+    async ShowResClick(w) {
         let time_str = Date().toLocaleString().replace(/\s+/g, '').replace(":", '')
         console.log(time_str)
         const requestOptionsSave = {
@@ -256,11 +269,13 @@ class ScanScreen extends Component {
             } else {
                 console.log("process frame done!");
                 console.log(json2["results"]);
-                // this.setState({
-                //     openCamera: true,
-                //     tookPic: false,
-                //     picThatTook: null
-                // })
+                this.setState({
+                    openCamera: false,
+                    tookPic: true,
+                    weight: w,
+                    info : json2["results"]
+                })
+                console.log(this.state)
             }
         }).catch((error) => {
             console.log(error);

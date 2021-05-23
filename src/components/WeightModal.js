@@ -9,7 +9,7 @@ class WeightModal extends Component {
             show: false,
             weight: false,
             accept: false,
-            weightNum: props.weight
+            weightNum: props.weight,
         }
         this.handleShow = this.handleShow.bind(this);
         this.handleLetsGo = this.handleLetsGo.bind(this);
@@ -105,7 +105,7 @@ class WeightModal extends Component {
                                     exit
                                 </Button>
                                 <Button variant={this.showButton()} onClick={this.handleLetsGo}>
-                                    Let's Go!
+                                   Show Results!
                                 </Button>
                             </Modal.Footer>
                         </Form>
