@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Camera from "../components/Camera";
 import {Col, Container, Row} from "react-bootstrap";
 import logo from '../images/camera_off.png';
-import SimplePopover from "../components/SimplePopover";
 import WeightModal from "../components/WeightModal";
 
 
@@ -14,12 +13,24 @@ class ScanScreen extends Component {
             tookPic: false,
             picThatTook: null,
             weightTook: false,
-            weight : null
+            weight: null
         }
         this.openOrCloseCamera = this.openOrCloseCamera.bind(this);
         this.takePic = this.takePic.bind(this);
         this.ShowResClick = this.ShowResClick.bind(this);
         this.tryAgainClick = this.tryAgainClick.bind(this);
+        this.handleWeight = this.handleWeight.bind(this);
+    }
+
+    handleWeight(weight) {
+        let img = this.state.picThatTook;
+        console.log(weight)
+        this.setState({
+            weight: weight,
+            tookPic: true,
+            openCamera: false,
+            picThatTook: img
+        })
     }
 
     openOrCloseCamera() {
@@ -86,7 +97,7 @@ class ScanScreen extends Component {
                             openCamera: false,
                             tookPic: true,
                             picThatTook: img,
-                            weight : null
+                            weight: null
 
                         })
                     }
@@ -110,11 +121,10 @@ class ScanScreen extends Component {
                             onClick={this.tryAgainClick}>
                         <h2> Try Again</h2>
                     </button>
-                    <WeightModal/>
+                    <WeightModal weight={this.state.weight} onChange={this.handleWeight}/>
                 </div>
             </>
-        }
-        else if (this.state.openCamera === false) {
+        } else if (this.state.openCamera === false) {
             return <button type="button"
                            className={"btn btn-success"}
                            onClick={this.openOrCloseCamera}>
@@ -157,11 +167,63 @@ class ScanScreen extends Component {
         )
     }
 
+    //  ShowResClick() {
+    //     if (this.state.weight === null) {
+    //         alert("You have to write subject's weight in the TextBox before you click 'Show Results'...")
+    //         return;
+    //     }
+    //     let time_str = Date().toLocaleString().replace(/\s+/g, '').replace(":", '')
+    //     console.log(time_str)
+    //     const requestOptionsSave = {
+    //         method: 'POST',
+    //         headers: {'Content-Type': 'application/json'}
+    //     };
+    //     console.log(time_str)
+    //     fetch("http://localhost:5000/scan/save_scan/" + time_str, requestOptionsSave).then(response => response.json())
+    //         .then((response) => {
+    //             console.log("the response save_scan: ", response)
+    //             if (response['save_scan'] === false) {
+    //                 throw new Error('Failed to save_scan');
+    //             } else {
+    //                 const requestOptions = {
+    //                     method: 'POST',
+    //                     headers: {'Content-Type': 'application/json'}
+    //                 };
+    //                 let w = this.state.weight.toString();
+    //                 fetch("http://localhost:5000/scan/process_frame/" + time_str +"/" + w, requestOptionsSave).then(response => response.json())
+    //                     .then((response) => {
+    //                     console.log("the response process_frame:", response)
+    //                     if (response['process_frame'] === false) {
+    //                         throw new Error('Failed to process the frame');
+    //                     } else {
+    //                         console.log("process frame done!");
+    //                         console.log(response["results"]);
+    //                         // this.setState({
+    //                         //     openCamera: true,
+    //                         //     tookPic: false,
+    //                         //     picThatTook: null
+    //                         // })
+    //                     }
+    //                     console.log("save_scan done!");
+    //                 }).catch((error) => {
+    //                     console.log(error);
+    //                 })
+    //
+    //             }
+    //         }).catch((error) => {
+    //         console.log(error);
+    //         alert("fail to save the image");
+    //         return "not good";
+    //     });
+    // }
+
+
     async ShowResClick() {
-        if(this.state.weightTook === false){
+        if (this.state.weight === null) {
             alert("You have to write subject's weight in the TextBox before you click 'Show Results'...")
             return;
         }
+        let w = this.state.weight.toString();
         let time_str = Date().toLocaleString().replace(/\s+/g, '').replace(":", '')
         console.log(time_str)
         const requestOptionsSave = {
@@ -170,7 +232,7 @@ class ScanScreen extends Component {
         };
         console.log(time_str)
         const response = await fetch("http://localhost:5000/scan/save_scan/" + time_str, requestOptionsSave);
-        response.json().then(function(value) {
+        response.json().then(function (value) {
             console.log("the response save_scan:", value)
             if (value['save_scan'] === false) {
                 throw new Error('Failed to save_scan');
@@ -186,7 +248,7 @@ class ScanScreen extends Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         };
-        fetch("http://localhost:5000/scan/process_frame/" + time_str + "/70", requestOptions).then(async (response2) => {
+        fetch("http://localhost:5000/scan/process_frame/" + time_str + "/" + w, requestOptions).then(async (response2) => {
             const json2 = await response2.json();
             console.log("the response process_frame:", json2)
             if (json2['process_frame'] === false) {
@@ -223,7 +285,7 @@ class ScanScreen extends Component {
                             openCamera: true,
                             tookPic: false,
                             picThatTook: null,
-                            weight : null
+                            weight: null
                         })
                     }
                 }

@@ -8,25 +8,25 @@ class WeightModal extends Component {
         this.state = {
             show: false,
             weight: false,
-            accept: false
+            accept: false,
+            weightNum: props.weight
         }
         this.handleShow = this.handleShow.bind(this);
         this.handleLetsGo = this.handleLetsGo.bind(this);
         this.handleAccept = this.handleAccept.bind(this);
         this.handleExit = this.handleExit.bind(this);
-        this.checkWeight = this.checkWeight.bind(this);
 
     }
 
-    checkWeight() {
-        console.log("hhhh")
+    handleChangeWeight(e) {
+        console.log(e)
+        this.props.onChange(e);
     }
 
     handleExit() {
         this.setState({
             show: false,
             accept: false,
-            weight: false,
             weightNum: 0
         })
     }
@@ -39,18 +39,23 @@ class WeightModal extends Component {
 
     }
 
-    handleLetsGo() {
-        if (this.state.weight && this.state.accept) {
-            alert("start analysis your bmi ,wait")
+    handleLetsGo(event) {
+        event.preventDefault();
+        const weight = this.element.value;
+        if (this.state.accept) {
+            //alert("start analysis your bmi ,wait")
             this.setState({
                 show: false
             })
+            console.log(weight);
+            this.handleChangeWeight(weight);
         }
     }
 
     handleShow() {
         this.setState({
-            show: true
+            show: true,
+            accept: false
         })
     }
 
@@ -69,15 +74,19 @@ class WeightModal extends Component {
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Please enter your weight</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onInput={() => this.checkWeight()} >
+
+                        <Form noValidate onSubmit={this.handleLetsGo}>
                             <Form.Group controlId="formBasicWeight">
-                                <Form.Label>Weight</Form.Label>
-                                <Form.Control type="text" pattern="[0-9]*" placeholder="Enter Weight"
-                                              value={this.state.weightNum}/>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Enter Weight"
+                                    defaultValue=""
+                                    ref={el => this.element = el}
+                                />
                                 <Form.Text className="text-muted">
                                     We'll never share your weight with anyone else :)
                                 </Form.Text>
@@ -91,19 +100,26 @@ class WeightModal extends Component {
                             <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check type="switch" label="accept the condition" onClick={this.handleAccept}/>
                             </Form.Group>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={this.handleExit}>
+                                    exit
+                                </Button>
+                                <Button variant={this.showButton()} onClick={this.handleLetsGo}>
+                                    Let's Go!
+                                </Button>
+                            </Modal.Footer>
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleExit}>
-                            exit
-                        </Button>
-                        <Button variant="primary" onClick={this.handleLetsGo}>
-                            Let's Go!
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
             </>
         );
+    }
+
+    showButton() {
+        if (this.state.accept) {
+            return "primary";
+        }
+        return "secondary";
     }
 }
 
