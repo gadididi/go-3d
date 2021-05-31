@@ -92,7 +92,7 @@ class ScanScreen extends Component {
     }
 
     cameraIsOpen() {
-        console.log("cameraIsOpen?????")
+        console.log("cameraIsOpen?")
         if (this.state.openCamera) {
             return <Camera/>
         }
