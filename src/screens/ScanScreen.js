@@ -177,7 +177,7 @@ class ScanScreen extends Component {
 
     }
     showResults() {
-        return <ResultModal weight={this.state.weight} info={this.state.info}/>
+        return <ResultModal fromHistory={false} weight={this.state.weight} info={this.state.info}/>
     }
     renderScreenScan(){
         if(this.state.processFrame){

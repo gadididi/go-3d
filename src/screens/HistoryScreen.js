@@ -10,10 +10,12 @@ class HistoryScreen extends Component {
         this.state = {
             images: {},
             currentImage: 0,
-            showNum : -1
+            showNum: -1
         }
+        this.show = false;
         this.onCurrentImageChange = this.onCurrentImageChange.bind(this);
         this.infoImage = this.infoImage.bind(this);
+        this.clearModal= this.clearModal.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +30,7 @@ class HistoryScreen extends Component {
 
                         for (const key in response['scans']) {
                             if (response['scans'].hasOwnProperty(key)) {
-                                arr.push( [ key, response['scans'][key] ] );
+                                arr.push([key, response['scans'][key]]);
                             }
                         }
                         this.setState({
@@ -43,24 +45,34 @@ class HistoryScreen extends Component {
     }
 
     infoImage(e) {
+        this.show = true;
         let curr = this.state.currentImage;
         this.setState({
-            showNum : curr
+            showNum: curr
         })
 
     }
-    showModalImg(){
-        if(this.state.showNum < 0){
+    clearModal(value){
+        this.show = false;
+        this.setState({
+
+        })
+    }
+    showModalImg() {
+        console.log("showModalImg")
+        if (this.state.showNum < 0 || this.show === false) {
             return <></>
-        }
-        else {
+        } else {
+            console.log(this.state)
+            this.show = false;
             let inf = this.state.images[this.state.showNum][1][2];
             console.log(this.state.showNum)
             console.log(inf)
-            return (<ResultModal bmi={inf['bmi_score']} weight={inf['weight']} info={inf}/>);
+            return (<ResultModal onExit={this.clearModal} fromHistory={true} bmi={inf['bmi_score']} weight={inf['weight']} info={inf}/>);
         }
 
     }
+
     onCurrentImageChange(index) {
         this.setState({currentImage: index});
     }
@@ -87,13 +99,18 @@ class HistoryScreen extends Component {
         }
 
         return (
-            <Gallery
-                images={IMAGES}
-                currentImageWillChange={this.onCurrentImageChange}
-                customControls={[
-                    <button key="infoImage" type="button" className={"btn btn-success"}
-                            onClick={this.infoImage}>Info</button>
-                ]}/>)
+            <div>
+                <Gallery images={IMAGES}
+                         backdropClosesModal={true}
+                         currentImageWillChange={this.onCurrentImageChange}
+                         customControls={[
+                             <button key="infoImage" type="button" className={"btn btn-success"}
+                                     onClick={this.infoImage}>Info</button>
+                         ]}>
+
+                </Gallery>
+            </div>
+        )
     }
 
     render() {

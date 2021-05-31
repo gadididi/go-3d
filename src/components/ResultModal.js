@@ -5,66 +5,62 @@ import BMISlider from "./BMISlider";
 class ResultModal extends Component {
     constructor(props) {
         super(props);
-        // const info = {
-        //     "abdomen": 0.3,
-        //     "bmi_score": 15.6,
-        //     "body_height": 10336.0,
-        //     "left_shoulder_to_elbow": 0.2,
-        //     "left_thigh": 0.3,
-        //     "right_shoulder_to_elbow": 10103.8,
-        //     "right_thigh": 0.3,
-        //     "shoulders": 10103.8,
-        //     "weight": 60
-        // }
-        //TODO: real state
         this.state = {
             show: true,
             info: props.info,
             weight: props.weight,
-            bmi: props.bmi
+            bmi: props.bmi,
+            fromHis : props.fromHistory
+
         }
-        // this.state = {
-        //     show: true,
-        //     info: info,
-        //     weight: 70,
-        //     bmi: 29,
-        // }
+        this.showHis = true
         this.typeWieght = {
-            'lean' : 1,
+            'lean': 1,
             'thin': 2,
-            'health' :3,
-            'fat' : 4,
-            'obese' : 5
+            'health': 3,
+            'fat': 4,
+            'obese': 5
         }
         this.kindOfPerson = null;
-        console.log(this.state)
         this.handleExit = this.handleExit.bind(this);
         this.checkType = this.checkType.bind(this);
     }
-    checkType(){
-        switch (this.state.type){
+
+    handleChangeExit(e) {
+        this.props.onExit(e);
+    }
+    checkType() {
+        switch (this.state.type) {
             case this.typeWieght['lean']:
-                this.kindOfPerson =  "blue"
+                this.kindOfPerson = "blue"
                 break;
             case this.typeWieght['thin']:
-                this.kindOfPerson =  "lightblue"
+                this.kindOfPerson = "lightblue"
                 break;
             case this.typeWieght['health']:
-                this.kindOfPerson =  "green"
+                this.kindOfPerson = "green"
                 break;
             case this.typeWieght['fat']:
-                this.kindOfPerson =  "orange"
+                this.kindOfPerson = "orange"
                 break;
             case this.typeWieght['obese']:
-                this.kindOfPerson =  "red"
+                this.kindOfPerson = "red"
                 break;
         }
     }
-    handleExit(){
+
+    handleExit() {
+        console.log("click finish modal")
         this.setState({
-            show: false
+            show: false,
+
         })
+        this.handleChangeExit(true)
     }
+    componentWillUnmount() {
+        console.log("fuckkkkkkk")
+    }
+
     componentDidMount() {
         fetch("http://localhost:5000/scan/get_bmi_explanation/" + this.state.bmi.toString())
             .then(response => response.json())
@@ -79,10 +75,10 @@ class ResultModal extends Component {
                             type: response['type'],
                         })
                         this.checkType(response['type'])
-                        this.setState({
-                            message: response['explanation'],
-                            type: response['type'],
-                        })
+                        // this.setState({
+                        //     message: response['explanation'],
+                        //     type: response['type'],
+                        // })
                         console.log(this.kindOfPerson)
                     }
                 }
@@ -97,13 +93,24 @@ class ResultModal extends Component {
             accept: false
         })
     }
-
+    // showOrNot(){
+    //     console.log("shoehis", this.showHis)
+    //     if(this.state.fromHis){
+    //         this.showHis = !this.showHis
+    //         console.log(this.showHis)
+    //         let res = this.showHis
+    //         return !res
+    //     }else {
+    //         return this.state.show;
+    //     }
+    // }
     render() {
         return (
             <>
                 <Modal
+                    visible style={{zIndex: 9999}}
                     show={this.state.show}
-                    onHide={this.handleClose}
+                    // onHide={this.handleClose}
                     backdrop="static"
                     keyboard={false}
                 >
@@ -137,7 +144,7 @@ class ResultModal extends Component {
                             </h6>
                         </div>
                         <BMISlider bmi={this.state.bmi}/>
-                        <h6 style={{ color: this.kindOfPerson}}>
+                        <h6 style={{color: this.kindOfPerson}}>
                             {this.state.message}
                         </h6>
                     </Modal.Body>
