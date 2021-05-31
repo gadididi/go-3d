@@ -1,6 +1,7 @@
 import {Button, Modal} from "react-bootstrap";
 import {Component} from "react";
 import BMISlider from "./BMISlider";
+import BMISpeedBarSlider from "./BMISpeedBarSlider";
 
 class ResultModal extends Component {
     constructor(props) {
@@ -75,10 +76,10 @@ class ResultModal extends Component {
                             type: response['type'],
                         })
                         this.checkType(response['type'])
-                        // this.setState({
-                        //     message: response['explanation'],
-                        //     type: response['type'],
-                        // })
+                        this.setState({
+                            message: response['explanation'],
+                            type: response['type'],
+                        })
                         console.log(this.kindOfPerson)
                     }
                 }
@@ -143,7 +144,7 @@ class ResultModal extends Component {
                                 shoulders: {this.state.info["shoulders"]}
                             </h6>
                         </div>
-                        <BMISlider bmi={this.state.bmi}/>
+                        <BMISpeedBarSlider bmi={this.state.bmi}/>
                         <h6 style={{color: this.kindOfPerson}}>
                             {this.state.message}
                         </h6>
