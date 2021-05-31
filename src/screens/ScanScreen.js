@@ -266,7 +266,7 @@ class ScanScreen extends Component {
 
 
     async ShowResClick(w) {
-        let time_str = Date().toLocaleString().replace(/\s+/g, '').replace(":", '')
+        let time_str = Date().toLocaleString().replace(/\s+/g, '').split(":")
         console.log(time_str)
         const requestOptionsSave = {
             method: 'POST',
