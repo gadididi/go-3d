@@ -125,7 +125,7 @@ class ScanScreen extends Component {
     }
 
     renderOpenCloseButton() {
-        if(this.state.weight != null || this.state.load === true){
+        if(this.state.weight != null || this.state.load === true || this.state.processFrame){
             return <></>;
         }
         if (this.state.tookPic) {
