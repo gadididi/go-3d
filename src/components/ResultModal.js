@@ -4,19 +4,19 @@ import BMISlider from "./BMISlider";
 class ResultModal extends Component {
     constructor(props) {
         super(props);
-        const info = {
-            "abdomen": 0.3,
-            "bmi_score": 15.6,
-            "body_height": 10336.0,
-            "left_shoulder_to_elbow": 0.2,
-            "left_thigh": 0.3,
-            "right_shoulder_to_elbow": 10103.8,
-            "right_thigh": 0.3,
-            "shoulders": 10103.8,
-            "weight": 60
-        }
+        // const info = {
+        //     "abdomen": 0.3,
+        //     "bmi_score": 15.6,
+        //     "body_height": 10336.0,
+        //     "left_shoulder_to_elbow": 0.2,
+        //     "left_thigh": 0.3,
+        //     "right_shoulder_to_elbow": 10103.8,
+        //     "right_thigh": 0.3,
+        //     "shoulders": 10103.8,
+        //     "weight": 60
+        // }
         this.state = {
-            info: info,
+            info: props.info,
             weight: props.weight,
             bmi: props.bmi
         }

@@ -4,6 +4,15 @@ import RenderDistanceSlider from "../components/RenderDistanceSlider";
 class SettingScreen extends Component{
     constructor(props) {
         super(props);
+        this.state = {
+            valueDis : 0
+        }
+        this.renderDistance = this.renderDistance.bind(this);
+    }
+    renderDistance(value){
+        this.setState({
+            valueDis : value
+        })
     }
     render() {
         return(
@@ -13,7 +22,7 @@ class SettingScreen extends Component{
                     <h6 align={'left'}>Render distance determines the distance the camera will be able to capture behind the subject.
                         As higher distance may improve the scan quality, if it's too high, it might actually decrease the quality of the scan
                         by breaking the subjects outline and shape. Thus, the recommended value is between 0.3 to 0.8</h6>
-                    <RenderDistanceSlider/>
+                    <RenderDistanceSlider dis={this.state.valueDis} onChange={this.renderDistance}/>
                 </div>
             </div>
 

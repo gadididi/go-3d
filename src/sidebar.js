@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Nav} from "react-bootstrap";
-import {withRouter} from "react-router";
 import './styles/Dashboard.css'
 
 class Side extends Component {
