@@ -19,7 +19,7 @@ class Dash extends Component {
             page: "Home",
             prevPage: "None"
         }
-        this.dis = 0
+        this.dis = 0.4
         this.handleNewScreen = this.handleNewScreen.bind(this);
         this.setDis= this.setDis.bind(this);
     }

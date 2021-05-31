@@ -4,11 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 
 
-class RenderDistanceSlider extends  Component{
+class RenderDistanceSlider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            distance : props.dis
+            distance: props.dis
         }
         this.marks = [
             {
@@ -37,26 +37,49 @@ class RenderDistanceSlider extends  Component{
             },
         ];
         this.handleChange = this.handleChange.bind(this);
+        console.log(this.state)
     }
-    handleChange(event,newValue){
+
+    handleChange(event, newValue) {
         console.log(newValue)
         this.setState({
-            distance : newValue
+            distance: newValue
         })
         this.props.onChange(newValue);
+        this.sendDisToServer(newValue)
     }
-    sendDisToServer(){
 
+
+    sendDisToServer(distance) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title: 'React POST Request Example'})
+        };
+        let dis = distance.toString()
+        fetch("http://localhost:5000//settings/render_distance/" + dis, requestOptions).then(response => response.json())
+            .then((response) => {
+                    console.log("the response", response)
+                    if (response["render_distance"]) {
+                        console.log("Success rendering distance")
+                    } else {
+                        throw new Error('Error: failed rendering distance');
+                    }
+                }
+            ).catch((error) => {
+            console.log(error)
+        });
     }
+
     render() {
         return (
-            <div  align={'center'} style={{width: 450}}>
+            <div align={'center'} style={{width: 450}}>
                 <Typography id="continuous-slider" gutterBottom align={'middle'}>
                 </Typography>
                 <Grid container spacing={0.1} align={'middle'}>
                     <Grid item xs align={'middle'}>
                         <Slider
-                            value={this.state.distance}
+                            value={this.state.distance *10}
                             align={'middle'}
                             onChangeCommitted={this.handleChange}
                             aria-labelledby="continuous-slider"
@@ -70,4 +93,5 @@ class RenderDistanceSlider extends  Component{
         );
     }
 }
+
 export default RenderDistanceSlider;
