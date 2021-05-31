@@ -52,12 +52,16 @@ class Side extends Component {
                         <Nav.Item>
                             <Nav.Link>
                                 <button className="btn-primary btn-lg "
-                                        onClick={() => this.changePage("About")}> About
+                                        onClick={() => this.changePage("History")}> History
                                 </button>
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="link-2">Link</Nav.Link>
+                            <Nav.Link>
+                                <button className="btn-primary btn-lg "
+                                        onClick={() => this.changePage("About")}> About
+                                </button>
+                            </Nav.Link>
                         </Nav.Item>
                     </div>
                 </Nav>

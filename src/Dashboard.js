@@ -10,6 +10,7 @@ import ScanScreen from "./screens/ScanScreen";
 import SettingScreen from "./screens/SettingScreen";
 import AboutScreen from "./screens/AboutScreen";
 import Footer from "./components/Footer"
+import HistoryScreen from "./screens/HistoryScreen";
 
 
 class Dash extends Component {
@@ -21,11 +22,13 @@ class Dash extends Component {
         }
         this.dis = 0.4
         this.handleNewScreen = this.handleNewScreen.bind(this);
-        this.setDis= this.setDis.bind(this);
+        this.setDis = this.setDis.bind(this);
     }
-    setDis(val){
+
+    setDis(val) {
         this.dis = val
     }
+
     handleNewScreen(value) {
         let prev = this.state.page;
         this.setState({
@@ -43,6 +46,8 @@ class Dash extends Component {
             return <ScanScreen/>
         } else if (this.state.page === "Setting") {
             return <SettingScreen dis={this.dis} onChange={this.setDis}/>
+        } else if (this.state.page === "History") {
+            return <HistoryScreen></HistoryScreen>
         } else {
             return <AboutScreen/>
         }
@@ -61,7 +66,7 @@ class Dash extends Component {
                             className="d-inline-block align-middle"
                         />
                     </Navbar.Brand>
-                    <h3 style={{color : "white"}}>GO 3D</h3>
+                    <h3 style={{color: "white"}}>GO 3D</h3>
                 </Navbar>
                 <Container fluid>
                     <Row>
