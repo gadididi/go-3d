@@ -27,7 +27,7 @@ class FailedProcessModal extends Component {
                     keyboard={false}
                 >
                     <Modal.Header closeButton onClick={this.closeModal}>
-                        <Modal.Title >Fail to measure your body, please try again
+                        <Modal.Title >Failed to measure your body, please try again
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

@@ -19,7 +19,7 @@ class WeightModal extends Component {
     }
 
     handleChangeWeight(e) {
-        console.log(e)
+        // console.log(e)
         this.props.onChange(e);
     }
 
@@ -47,7 +47,7 @@ class WeightModal extends Component {
             this.setState({
                 show: false
             })
-            console.log(weight);
+            // console.log(weight);
             this.handleChangeWeight(weight);
         }
     }

@@ -7,6 +7,8 @@ import ResultModal from "../components/ResultModal";
 import CircularStatic from "../components/Loader";
 import FailedProcessModal from "../components/FailedprocessPic";
 
+
+
 class ScanScreen extends Component {
     constructor(props) {
         super(props);
@@ -17,8 +19,10 @@ class ScanScreen extends Component {
             weightTook: false,
             weight: null,
             load : false,
-            failed : false
+            processFrame : false
+
         }
+        this.failed = false;
         this.openOrCloseCamera = this.openOrCloseCamera.bind(this);
         this.takePic = this.takePic.bind(this);
         this.ShowResClick = this.ShowResClick.bind(this);
@@ -165,7 +169,8 @@ class ScanScreen extends Component {
         }
     }
     showFailedPicModal(){
-        if (this.state.failed === true){
+        if (this.failed === true){
+            this.failed = false;
             return <FailedProcessModal/>
         }
         return <></>
@@ -175,6 +180,9 @@ class ScanScreen extends Component {
         return <ResultModal weight={this.state.weight} info={this.state.info}/>
     }
     renderScreenScan(){
+        if(this.state.processFrame){
+            return <CircularStatic/>;
+        }
         if (this.state.load === true){
             return <CircularStatic/>
         }
@@ -264,7 +272,6 @@ class ScanScreen extends Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         };
-        console.log(time_str)
         const response = await fetch("http://localhost:5000/scan/save_scan/" + time_str, requestOptionsSave);
         response.json().then(function (value) {
             console.log("the response save_scan:", value)
@@ -282,6 +289,9 @@ class ScanScreen extends Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         };
+        this.setState({
+            processFrame : true
+        })
         fetch("http://localhost:5000/scan/process_frame/" + time_str + "/" + w, requestOptions).then(async (response2) => {
             const json2 = await response2.json();
             console.log("the response process_frame:", json2)
@@ -290,17 +300,20 @@ class ScanScreen extends Component {
             } else {
                 console.log("process frame done!");
                 console.log(json2["results"]);
+                this.failed =  false;
                 this.setState({
                     openCamera: false,
                     tookPic: true,
                     weight: w,
                     info : json2["results"],
-                    failed: false
+                    processFrame : false
                 })
+
                 console.log(this.state)
             }
         }).catch((error) => {
             console.log(error);
+            this.failed = true
             this.setState({
                 openCamera: false,
                 tookPic: false,
@@ -309,7 +322,8 @@ class ScanScreen extends Component {
                 img: null,
                 load: false,
                 picThatTook: null,
-                failed: true
+                processFrame : false
+
             })
             console.log(this.state)
         });
