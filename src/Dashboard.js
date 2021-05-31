@@ -19,14 +19,19 @@ class Dash extends Component {
             page: "Home",
             prevPage: "None"
         }
+        this.dis = 0
         this.handleNewScreen = this.handleNewScreen.bind(this);
+        this.setDis= this.setDis.bind(this);
     }
-
+    setDis(val){
+        this.dis = val
+    }
     handleNewScreen(value) {
         let prev = this.state.page;
         this.setState({
             page: value,
-            prevPage: prev
+            prevPage: prev,
+
         })
     }
 
@@ -37,7 +42,7 @@ class Dash extends Component {
         } else if (this.state.page === "Start Scan") {
             return <ScanScreen/>
         } else if (this.state.page === "Setting") {
-            return <SettingScreen/>
+            return <SettingScreen dis={this.dis} onChange={this.setDis}/>
         } else {
             return <AboutScreen/>
         }

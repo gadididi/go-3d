@@ -5,7 +5,7 @@ class SettingScreen extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            valueDis : 0
+            valueDis : props.dis
         }
         this.renderDistance = this.renderDistance.bind(this);
     }
@@ -13,6 +13,7 @@ class SettingScreen extends Component{
         this.setState({
             valueDis : value
         })
+        this.props.onChange(value);
     }
     render() {
         return(
