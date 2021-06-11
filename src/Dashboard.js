@@ -12,7 +12,7 @@ import AboutScreen from "./screens/AboutScreen";
 import Footer from "./components/Footer"
 import HistoryScreen from "./screens/HistoryScreen";
 
-
+// Dash responsible for the main container(page). rendering the page
 class Dash extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +29,7 @@ class Dash extends Component {
         this.dis = val
     }
 
+    // click on other screen event
     handleNewScreen(value) {
         let prev = this.state.page;
         this.setState({
@@ -37,7 +38,7 @@ class Dash extends Component {
 
         })
     }
-
+    // render the new page
     renderPage() {
         console.log(this.state)
         if (this.state.page === "Home") {

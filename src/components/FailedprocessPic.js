@@ -1,7 +1,8 @@
 import { Modal} from "react-bootstrap";
 import {Component} from "react";
 
-
+// class in charge of failing in analyzing process..
+// when the server does not successes to recognize the person
 class FailedProcessModal extends Component {
     constructor(props) {
         super(props);

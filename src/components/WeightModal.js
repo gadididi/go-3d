@@ -1,7 +1,7 @@
 import {Button, Form, Modal} from "react-bootstrap";
 import {Component} from "react";
 
-
+// this class in charge of user weight input
 class WeightModal extends Component {
     constructor(props) {
         super(props);
@@ -31,6 +31,7 @@ class WeightModal extends Component {
         })
     }
 
+    // accept the conditions
     handleAccept() {
         let prev = this.state.accept;
         this.setState({
@@ -39,6 +40,7 @@ class WeightModal extends Component {
 
     }
 
+    // lets go = start to measure the body persson
     handleLetsGo(event) {
         event.preventDefault();
         const weight = this.element.value;

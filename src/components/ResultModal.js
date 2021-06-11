@@ -47,9 +47,12 @@ class ResultModal extends Component {
             case this.typeWieght['obese']:
                 this.kindOfPerson = "red"
                 break;
+            default:
+                throw "unknown type Wight"
         }
     }
 
+    //close the result modal
     handleExit() {
         console.log("click finish modal")
         this.setState({
@@ -58,10 +61,8 @@ class ResultModal extends Component {
         })
         this.handleChangeExit(true)
     }
-    componentWillUnmount() {
-        console.log("fuckkkkkkk")
-    }
 
+    // ask for bmi explanation for my results..
     componentDidMount() {
         fetch("http://localhost:5000/scan/get_bmi_explanation/" + this.state.bmi.toString())
             .then(response => response.json())

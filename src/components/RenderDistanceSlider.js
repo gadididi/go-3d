@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 
-
+// this class in charge of determining the distance that the camera discard from the red point
 class RenderDistanceSlider extends Component {
     constructor(props) {
         super(props);
@@ -49,7 +49,7 @@ class RenderDistanceSlider extends Component {
         this.sendDisToServer(newValue)
     }
 
-
+    // you can change the distance by the slider. send request to change it
     sendDisToServer(distance) {
         const requestOptions = {
             method: 'POST',

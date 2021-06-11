@@ -5,6 +5,7 @@ import l515 from '../images/lidar515L.jfif';
 import bmi from '../images/bmi.jpg';
 import human from '../images/human.jpg';
 
+// landing page
 class MainScreen extends Component {
     constructor(props) {
         super(props);

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import RenderDistanceSlider from "../components/RenderDistanceSlider";
 
+// setting page. this class in charge of showing the all setting options
 class SettingScreen extends Component{
     constructor(props) {
         super(props);

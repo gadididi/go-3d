@@ -8,7 +8,7 @@ import CircularStatic from "../components/Loader";
 import FailedProcessModal from "../components/FailedprocessPic";
 
 
-
+// the scan screen. can open camera and see the stream. take a pic and send it to measure body part size
 class ScanScreen extends Component {
     constructor(props) {
         super(props);
@@ -36,7 +36,7 @@ class ScanScreen extends Component {
             console.log("good")
         });
     }
-
+    // open/close the camera
     setOpenCamera(prev){
         //let prev = this.state.openCamera;
         this.setState({
@@ -56,6 +56,7 @@ class ScanScreen extends Component {
         }
     }
 
+    // send request to open the camera in the server side
     componentDidMount() {
         fetch("http://localhost:5000/scan")
             .then(response => response.json())
@@ -72,6 +73,7 @@ class ScanScreen extends Component {
         });
     }
 
+    //close the camera in the server side
     componentWillUnmount() {
         this.setState(
             {openCamera: false}
@@ -99,6 +101,7 @@ class ScanScreen extends Component {
         return <img src={logo} width="640" height="480" alt={"Me"}/>
     }
 
+    // take a snapshot and show it to the user
     takePic() {
         fetch("http://localhost:5000/scan/take_snapshot")
             .then(response => response.json())
@@ -265,6 +268,7 @@ class ScanScreen extends Component {
     // }
 
 
+    // ask for save the picture and then, ask for measure the body part size by one pic
     async ShowResClick(w) {
         let time_str = Date().toLocaleString().replace(/\s+/g, '').split(":")
         console.log(time_str)
@@ -329,6 +333,7 @@ class ScanScreen extends Component {
         });
     }
 
+    // event - when the user want to take another pic..
     tryAgainClick() {
         const requestOptions = {
             method: 'POST',

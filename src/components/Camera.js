@@ -12,7 +12,7 @@ class Camera extends Component {
 
     }
 
-
+    // close the stream and clean the interval (that asking frames)
     componentWillUnmount() {
         clearInterval(this.interval);
         this.interval =null;
@@ -20,11 +20,17 @@ class Camera extends Component {
         console.log("finished")
     }
 
+    // start the stream
     componentDidMount() {
         this.stream = true;
         this.interval = setInterval(() => this.startStream(), 30);
     }
 
+
+    /*
+    request a frame per 1 request. the frame comes as base64 encoded image.
+    we do decode here.
+     */
     startStream() {
         if (this.stream === true && this.counter < 20){
             this.counter+=1;

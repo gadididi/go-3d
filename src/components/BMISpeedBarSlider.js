@@ -1,7 +1,7 @@
 import {Component} from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 
-
+// bmi slider that shows the range of bmi
 class BMISpeedBarSlider extends Component{
     constructor(props) {
         super(props);

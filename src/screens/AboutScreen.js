@@ -3,6 +3,7 @@ import bad_example from '../images/Example_bad.png';
 import good_example from '../images/Example_good.png';
 import {Col, Container, Row} from "react-bootstrap";
 
+// this class in charge of explanation and information
 class AboutScreen extends Component{
     constructor(props) {
         super(props);

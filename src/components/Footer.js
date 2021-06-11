@@ -1,5 +1,7 @@
 import React from "react";
 import { Form} from "react-bootstrap";
+
+// the owners line in the bottom
 function Footer() {
     return (
         <footer className="page-footer font-small gray footer">

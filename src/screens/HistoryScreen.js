@@ -3,6 +3,7 @@ import {Component} from "react";
 import Gallery from 'react-grid-gallery';
 import ResultModal from "../components/ResultModal";
 
+//this class in charge of showing the last 10 scans that had been saved in db server
 class HistoryScreen extends Component {
 
     constructor(props) {
@@ -18,6 +19,7 @@ class HistoryScreen extends Component {
         this.clearModal= this.clearModal.bind(this);
     }
 
+    // ask for those 10 last scans
     componentDidMount() {
         fetch("http://localhost:5000/scan_history")
             .then(response => response.json())

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 
 
+// sharing storage for common data.
 function Store(initialState = {page: "Home"}) {
     this.state = initialState;
 }
