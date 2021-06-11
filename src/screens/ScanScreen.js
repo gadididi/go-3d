@@ -18,8 +18,8 @@ class ScanScreen extends Component {
             picThatTook: null,
             weightTook: false,
             weight: null,
-            load : false,
-            processFrame : false
+            load: false,
+            processFrame: false
 
         }
         this.failed = false;
@@ -28,6 +28,20 @@ class ScanScreen extends Component {
         this.ShowResClick = this.ShowResClick.bind(this);
         this.tryAgainClick = this.tryAgainClick.bind(this);
         this.handleWeight = this.handleWeight.bind(this);
+        this.clearResModal = this.clearResModal.bind(this);
+    }
+
+    clearResModal() {
+        console.log("clear the res modal")
+        this.setState({
+            processFrame: false,
+            load: false,
+            tookPic: false,
+            weight: null,
+            openCamera: false,
+            picThatTook: null,
+            weightTook: false
+        })
     }
 
     handleWeight(weight) {
@@ -36,22 +50,26 @@ class ScanScreen extends Component {
             console.log("good")
         });
     }
+
     // open/close the camera
-    setOpenCamera(prev){
+    setOpenCamera(prev) {
         //let prev = this.state.openCamera;
         this.setState({
             openCamera: !prev,
             load: false
         })
     }
+
     openOrCloseCamera() {
         const loading = this.state.openCamera === false;
         this.setState({
             load: loading
         })
-        if (this.state.openCamera === false){
-            setTimeout(()=>{this.setOpenCamera(this.state.openCamera)}, 3000);
-        }else {
+        if (this.state.openCamera === false) {
+            setTimeout(() => {
+                this.setOpenCamera(this.state.openCamera)
+            }, 3000);
+        } else {
             this.setOpenCamera(this.state.openCamera)
         }
     }
@@ -128,7 +146,7 @@ class ScanScreen extends Component {
     }
 
     renderOpenCloseButton() {
-        if(this.state.weight != null || this.state.load === true || this.state.processFrame){
+        if (this.state.weight != null || this.state.load === true || this.state.processFrame) {
             return <></>;
         }
         if (this.state.tookPic) {
@@ -143,17 +161,17 @@ class ScanScreen extends Component {
                 </div>
             </>
         } else if (this.state.openCamera === false) {
-            return(
+            return (
                 <>
-                <div>
-                    <button type="button"
-                            className={"btn btn-success"}
-                            onClick={this.openOrCloseCamera}>
-                        <h2> Open Video</h2>
-                    </button>
-                    {this.showFailedPicModal()}
-                </div>
-            </>
+                    <div>
+                        <button type="button"
+                                className={"btn btn-success"}
+                                onClick={this.openOrCloseCamera}>
+                            <h2> Open Video</h2>
+                        </button>
+                        {this.showFailedPicModal()}
+                    </div>
+                </>
             )
         } else {
             return (
@@ -171,32 +189,36 @@ class ScanScreen extends Component {
 
         }
     }
-    showFailedPicModal(){
-        if (this.failed === true){
+
+    showFailedPicModal() {
+        if (this.failed === true) {
             this.failed = false;
             return <FailedProcessModal/>
         }
         return <></>
 
     }
+
     showResults() {
-        return <ResultModal fromHistory={false} weight={this.state.weight} info={this.state.info}/>
+        return <ResultModal onExit={this.clearResModal} fromHistory={false} weight={this.state.weight}
+                            info={this.state.info}/>
     }
-    renderScreenScan(){
-        if(this.state.processFrame){
+
+    renderScreenScan() {
+        if (this.state.processFrame) {
             return <CircularStatic/>;
         }
-        if (this.state.load === true){
+        if (this.state.load === true) {
             return <CircularStatic/>
-        }
-        else if(this.state.tookPic===false){
-             return this.cameraIsOpen();
-        } else if (this.state.weight === null){
+        } else if (this.state.tookPic === false) {
+            return this.cameraIsOpen();
+        } else if (this.state.weight === null) {
             return this.showPicTaken();
         } else {
             return this.showResults();
         }
     }
+
     render() {
         return (
             <Container fluid>
@@ -294,7 +316,7 @@ class ScanScreen extends Component {
             headers: {'Content-Type': 'application/json'}
         };
         this.setState({
-            processFrame : true
+            processFrame: true
         })
         fetch("http://localhost:5000/scan/process_frame/" + time_str + "/" + w, requestOptions).then(async (response2) => {
             const json2 = await response2.json();
@@ -304,13 +326,13 @@ class ScanScreen extends Component {
             } else {
                 console.log("process frame done!");
                 console.log(json2["results"]);
-                this.failed =  false;
+                this.failed = false;
                 this.setState({
                     openCamera: false,
                     tookPic: true,
                     weight: w,
-                    info : json2["results"],
-                    processFrame : false
+                    info: json2["results"],
+                    processFrame: false
                 })
 
                 console.log(this.state)
@@ -322,11 +344,11 @@ class ScanScreen extends Component {
                 openCamera: false,
                 tookPic: false,
                 weight: null,
-                info : null,
+                info: null,
                 img: null,
                 load: false,
                 picThatTook: null,
-                processFrame : false
+                processFrame: false
 
             })
             console.log(this.state)

@@ -23,6 +23,7 @@ class BMISpeedBarSlider extends Component{
                         width={400}
                         height={400}
                         maxValue={35}
+                        minValue={5}
                         needleColor="blue"
                         segments={9}
                         segmentColors={[

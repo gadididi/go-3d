@@ -10,7 +10,7 @@ class ResultModal extends Component {
             show: true,
             info: props.info,
             weight: props.weight,
-            bmi: props.bmi,
+            bmi: props.info["bmi_score"],
             fromHis : props.fromHistory
 
         }
@@ -64,6 +64,7 @@ class ResultModal extends Component {
 
     // ask for bmi explanation for my results..
     componentDidMount() {
+        console.log(this.state)
         fetch("http://localhost:5000/scan/get_bmi_explanation/" + this.state.bmi.toString())
             .then(response => response.json())
             .then((response) => {
